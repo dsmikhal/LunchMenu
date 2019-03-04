@@ -51,7 +51,7 @@ This application uses the latest Slim 3 Framework with the PHP-View template ren
 
 Make clone of repository to your local machine with
 
-    git clone https://dsmikhal@bitbucket.org/dsmikhal/lunchmenu.git [app-name]
+    git clone https://github.com/dsmikhal/LunchMenu.git [app-name]
 
 ## Install dependencies
 
