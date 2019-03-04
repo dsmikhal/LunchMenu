@@ -6,6 +6,7 @@ use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Http\Environment;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This is an example class that shows how you could set up a method that
@@ -13,14 +14,14 @@ use Slim\Http\Environment;
  * tuned to the specifics of this skeleton app, so if your needs are
  * different, you'll need to change it.
  */
-class BaseTestCase extends \PHPUnit_Framework_TestCase
+class BaseTestCase extends TestCase
 {
     /**
      * Use middleware when running application?
      *
      * @var bool
      */
-    protected $withMiddleware = true;
+    protected $withMiddleware = false;
 
     /**
      * Process the application given a request method and URI
@@ -28,9 +29,10 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
      * @param string $requestMethod the request method (e.g. GET, POST, etc.)
      * @param string $requestUri the request URI
      * @param array|object|null $requestData the request data
+     * @param string $test - name of the data-test set
      * @return \Slim\Http\Response
      */
-    public function runApp($requestMethod, $requestUri, $requestData = null)
+    public function runApp($requestMethod, $requestUri, $requestData = null, $test = null)
     {
         // Create a mock environment for testing with
         $environment = Environment::mock(
@@ -53,6 +55,10 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
 
         // Use the application settings
         $settings = require __DIR__ . '/../../src/settings.php';
+        if (!empty($test)) {
+            $settings['settings']['fridge']['file_path'] = __DIR__ . '/../../src/data-test/'.$test.'/ingredients.json';
+            $settings['settings']['recipes']['file_path'] = __DIR__ . '/../../src/data-test/'.$test.'/recipes.json';
+        }
 
         // Instantiate the application
         $app = new App($settings);
