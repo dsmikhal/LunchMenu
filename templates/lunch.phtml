@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Lunch Menu</title>
+        <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+        <style>
+            body {
+                margin: 20px 0 0 0;
+                padding: 0;
+                width: 100%;
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                text-align: left;
+                color: #aaa;
+                font-size: 18px;
+            }
+
+            h1 {
+                color: #719e40;
+                letter-spacing: -3px;
+                font-family: 'Lato', sans-serif;
+                font-size: 50px;
+                font-weight: 200;
+                margin-bottom: 0;
+            }
+
+            h3 {
+                color: #993322;
+                letter-spacing: -3px;
+                font-family: 'Lato', sans-serif;
+                font-size: 16px;
+                font-weight: 200;
+                margin-bottom: 0;
+            }
+        </style>
+    </head>
+    <body>
+    <h1>Today's Menu</h1>
+
+        <table border="1" class="recipes-list">
+            <tr>
+                <th>Title</th>
+                <th>Ingredients</th>
+                <th>best-before</th>
+
+            </tr>
+
+            <?php foreach ($menu as $num => $recipe): ?>
+
+                <tr id="recipe-<?=$num ?>">
+                    <td name="recipe-name"><?=$recipe['title'] ?></td>
+                    <td name="recipe-components"><?=json_encode($recipe['ingredients']) ?></td>
+                    <td name="recipe-best-before"><?=date('Y-m-d',$recipe['best_before'])?></td>
+                </tr>
+
+            <?php endforeach; ?>
+        </table>
+    Total <?=count($menu)?> recipes found.
+    <?php if ($fridge != 0 && $recipes != 0 && count($menu) == 0) : ?>
+        <h3>You do not have enough ingredients, please go shopping.</h3>
+    <?php endif; ?>
+    <?php if ($fridge == 0) : ?>
+        <h3>You do not have fresh ingredients, please go shopping.</h3>
+    <?php endif; ?>
+    <?php if ($recipes == 0) : ?>
+        <h3>Your Recipes knowledge base is empty, please add any recipe to entry dataset.</h3>
+    <?php endif; ?>
+    </body>
+</html>
