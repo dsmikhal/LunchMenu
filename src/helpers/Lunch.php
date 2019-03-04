@@ -69,7 +69,11 @@ class Lunch
 
                 if (array_key_exists($ing, $avalable_ing)) {
                     $found++;
-                    $min_before = min($min_before, $this->getDateStamp($avalable_ing[$ing]['best-before']));
+                    if ($found == 1) {
+                        $min_before = $this->getDateStamp($avalable_ing[$ing]['best-before']);
+                    } else {
+                        $min_before = min($min_before, $this->getDateStamp($avalable_ing[$ing]['best-before']));
+                    }
                 }
             }
             if ($found == count($recipe['ingredients'])) {
